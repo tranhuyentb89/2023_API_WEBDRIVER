@@ -2,27 +2,24 @@ package selenium;
 
 import java.util.concurrent.TimeUnit;
 
-import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.firefox.FirefoxDriver;
 import org.testng.Assert;
 import org.testng.annotations.AfterTest;
 import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
 
-public class Topic11_JSExecute {
+public class Topic_01_RunInChrome {
 	WebDriver driver;
-	JavascriptExecutor jsExecuter;
-
 
 	@BeforeTest
 	public void beforeTest() {
 		System.setProperty("webdriver.chrome.driver", ".\\lib\\chromedriver.exe");
 		driver = new ChromeDriver();
-		jsExecuter = (JavascriptExecutor) driver;
 		driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
 		driver.manage().window().maximize();
+		driver.get("http://live.techpanda.org/");
 	}
 
 	@Test
@@ -37,24 +34,6 @@ public class Topic11_JSExecute {
 		Assert.assertEquals(pageTitle, "Home page");
 	}
 
-	public void highlightElement(WebElement element) {
-		jsExecuter = (JavascriptExecutor)driver;
-		jsExecuter.executeScript("arguments[0].style.border='6px groove red'", element);
-	}
-	
-	public Object executeForBrowser(String javaScript) {
-		return jsExecuter.executeScript(javaScript);
-	}
-	
-	public Object clickToElementByJS(WebElement element) {
-		return jsExecuter.executeScript("arguments[0].click();", element);
-
-	}
-	
-	public Object sendkeyToElementByJS(WebElement element, String value) {
-		return jsExecuter.executeScript("arguments[0].setAttribute('value'," + value + "')", element);
-	}
-	
 	@AfterTest
 	public void afterTest() {
 		driver.close();

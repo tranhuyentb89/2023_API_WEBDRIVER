@@ -19,7 +19,7 @@ import org.testng.annotations.AfterTest;
 import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
 
-public class Topic07_HandleDropdown {
+public class Topic_07_HandleDropdown {
 	WebDriver driver;
 	WebDriverWait waitExplicit;
 	JavascriptExecutor jsExecuter;

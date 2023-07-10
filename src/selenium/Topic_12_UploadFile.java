@@ -1,15 +1,12 @@
 package selenium;
 
-import java.util.Set;
+import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 import org.openqa.selenium.By;
-import org.openqa.selenium.JavascriptExecutor;
-import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
-import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
 import org.testng.annotations.AfterTest;
 import org.testng.annotations.BeforeTest;
@@ -36,17 +33,36 @@ public class Topic_12_UploadFile {
 		driver.manage().window().maximize();
 	}
 
-	@Test
+//	@Test
 	public void Testcase01() throws InterruptedException {
 		driver.get("https://blueimp.github.io/jQuery-File-Upload/");
 		for (String file : files) {
 			WebElement uploadFile = driver.findElement(By.xpath("//input[@type='file']"));
+			Thread.sleep(1000);
 			uploadFile.sendKeys(file);
+			Thread.sleep(1000);
 		}
 
-		Thread.sleep(3000);
 		driver.findElement(By.xpath("//span[text()='Start upload']")).click();
-		Thread.sleep(3000);
+		Assert.assertTrue(driver.findElement(By.xpath("//a[text()='" + fileName01 + "']")).isDisplayed());
+		Assert.assertTrue(driver.findElement(By.xpath("//a[text()='" + fileName02 + "']")).isDisplayed());
+		Assert.assertTrue(driver.findElement(By.xpath("//a[text()='" + fileName03 + "']")).isDisplayed());
+
+	}
+
+	@Test
+	public void Testcase02_Upload_multipleFile_ATime() throws InterruptedException {
+		driver.get("https://blueimp.github.io/jQuery-File-Upload/");
+		WebElement uploadFile = driver.findElement(By.xpath("//input[@type='file']"));
+		uploadFile.sendKeys(fileNamePath01+ "\n" + fileNamePath02 + "\n" + fileNamePath03);
+		Thread.sleep(1000);
+		List <WebElement> startButton = driver.findElements(By.xpath("//table//button[@class='btn btn-primary start']"));
+			
+		driver.findElement(By.xpath("//span[text()='Start upload']")).click();
+		Assert.assertTrue(driver.findElement(By.xpath("//a[text()='" + fileName01 + "']")).isDisplayed());
+		Assert.assertTrue(driver.findElement(By.xpath("//a[text()='" + fileName02 + "']")).isDisplayed());
+		Assert.assertTrue(driver.findElement(By.xpath("//a[text()='" + fileName03 + "']")).isDisplayed());
+
 	}
 
 	@AfterTest
